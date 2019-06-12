@@ -10,23 +10,25 @@ import { UserService } from '../services/user.service';
 })
 export class ConversationComponent implements OnInit {
   friendId:any;
-  friends:User[];
   friend: User;
-  price:number = 78.13215464651321564;
-  today:any = Date.now();
+  // price:number = 78.13215464651321564;
+  // today:any = Date.now();
   constructor(private activateRoute:ActivatedRoute,
               private userService: UserService) { 
 
     this.friendId = this.activateRoute.snapshot.params['uid'];
-    
-    this.friends = userService.getFrieds();
+    this.userService.getUserById(this.friendId).valueChanges()
+    .subscribe((x:User) => {
+      this.friend = x;
+    },error => {
+      console.log(error);
+    });
 
-    this.friend = this.friends.find((record) => {
-      return record.uid == this.friendId;
-    })
+    // this.friends = userService.getFrieds();
 
-    console.log(this.friend);
-
+    // this.friend = this.friends.find((record) => {
+    //   return record.uid == this.friendId;
+    // })
 
   }
 

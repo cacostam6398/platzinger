@@ -8,7 +8,6 @@
             </div>
         </div>
      </div>
-
      <div class="row justify-content-md-center">
         <div class="col.md-6">
           <div class="center">
@@ -17,13 +16,13 @@
           <p *ngIf="operation =='register'">Ya tienes cuenta? has <a style="cursor: pointer" (click)="operation = 'login'" >Login</a></p>
           <p *ngIf="operation =='login'">No tienes cuenta? <a style="cursor: pointer" (click)="operation = 'register'" >Registrarse</a></p>
           <div class="boreredContainer">
-            <input class="form-control marbo15" type="email" placeholder="Ingresa Email" />
-            <input class="form-control marbo15" type="password" placeholder="Ingresa Contraseña" />
-            <input *ngIf="operation =='register'" class="form-control marbo15" type="text" placeholder="Ingresa Nick" />
+            <input class="form-control marbo15" type="email" placeholder="Ingresa Email" [(ngModel)]="email" />
+            <input class="form-control marbo15" type="password" placeholder="Ingresa Contraseña"  [(ngModel)]="password" />
+            <input *ngIf="operation =='register'" class="form-control marbo15" type="text" placeholder="Ingresa Nick" [(ngModel)]="nick"/>
           </div>
           <div class="center marto15">
-            <a *ngIf="operation =='login'"class="btn btn-primary">Inicias Sesion</a>
-            <a *ngIf="operation =='register'" class="btn btn-primary">Registrarme</a>
+            <a *ngIf="operation =='login'"class="btn btn-primary" (click)="login()">Inicias Sesion</a>
+            <a *ngIf="operation =='register'" class="btn btn-primary" (click)="register()">Registrarme</a>
           </div>
         </div>
       </div>
