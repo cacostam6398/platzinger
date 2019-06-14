@@ -4,14 +4,14 @@
     <div class="homeHeadContainer">
       <div class="row">
         <div class="col-md-auto">
-            <div class="avatarFrameOnline">
-              <img id="homeAvatarPicture" src="../../assets/img/generic_avatar.png" alt="generic avatar">
+            <div class="avatarFrameOnline" *ngIf="user">
+              <img id="homeAvatarPicture" [src]="user.avatar || '../../assets/img/generic_avatar.png'"  alt="generic avatar">
             </div>
         </div>
-        <div class="col">
-            <b>David</b>
+        <div class="col" *ngIf="user">
+            <b>{{user.nick}}</b>
             <div>
-              <span>Online</span>
+              <span>{{user.status}}</span>
               <br>
               <span>< Escribe un mensaje Personal ></span><br>
               <a (click)="logOut()">Cerrar Sesion</a>

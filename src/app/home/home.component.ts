@@ -12,9 +12,22 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
 
   friends:User[];
-  query:string = ''
+  query:string = '';
+  user:User;
   constructor(private userService: UserService, private authenticationService:AuthenticationService,private router:Router) { 
     
+    this.authenticationService.getStatus().subscribe((next)=> {
+      this.userService.getUserById(next.uid).valueChanges().subscribe((data : User) =>
+      {
+          this.user = data;
+          console.log(this.user);
+      },(error)=>{
+        console.log(error)
+      });
+    },(error) =>{
+      console.log(error)
+    });
+
     userService.getUsers().valueChanges()
      .subscribe((x: User[]) => {
        this.friends = x;

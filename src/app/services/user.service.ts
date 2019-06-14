@@ -25,6 +25,8 @@ export class UserService {
     return this.angularDataBase.object('/users/' + user.uid).update(user);
   }
 
-
+  setAvatar(avatar, uid){
+    return this,this.angularDataBase.object('/users/'+uid + '/avatar').set(avatar);
+  }
 
 }
