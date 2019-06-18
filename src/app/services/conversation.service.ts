@@ -21,5 +21,11 @@ export class ConversationService {
 
   }
 
+  editConversation(conversation){
+
+    return this.angularFireDatabase.object('conversations/' + conversation.uid + '/' + conversation.timestamp).set(conversation);
+
+  }
+
 
 }

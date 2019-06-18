@@ -19,6 +19,8 @@ export class ConversationComponent implements OnInit {
   user:User;
   conversation_id:String;
   textMessage:string;
+  conversation:any[];
+  shake:boolean = false;
 
   // price:number = 78.13215464651321564;
   // today:any = Date.now();
@@ -59,17 +61,68 @@ export class ConversationComponent implements OnInit {
       timestamp:Date.now(),
       text: this.textMessage,
       sender: this.user.uid,
-      receiver : this.friend.uid
+      receiver : this.friend.uid,
+      type: 'text'
     }
       this.conversationService.createConversation(message).then((fufilled) =>{
         this.textMessage = '';
       });
   }
 
+  sendZumbido(){
+    const message = {
+      uid: this.conversation_id,
+      timestamp:Date.now(),
+      text: null,
+      sender: this.user.uid,
+      receiver : this.friend.uid,
+      type: 'zumbido'
+    }
+      this.conversationService.createConversation(message).then((fufilled) =>{});
+      this.doZumbido();
+    }
+
+    doZumbido(){
+      const audio = new Audio('../../assets/sound/zumbido.m4a');
+      audio.play();
+      this.shake = true;
+      window.setTimeout((hand) =>{
+        this.shake = false; 
+      },1000 );
+
+    }
+
   getConversations(){
-    this.conversationService.getConversation(this.conversation_id).valueChanges().subscribe((fufilled) => {
-        
-    })
+    this.conversationService.getConversation(this.conversation_id).valueChanges().subscribe((data) => {
+        console.log(data);
+        this.conversation = data;
+        this.conversation.forEach((message) => {
+          if (!message.seen) {
+            message.seen = true;
+            this.conversationService.editConversation(message);
+            if(message.type == 'text'){           
+            const audio = new Audio('../../assets/sound/new_message.m4a');
+            audio.play();
+            }else if (message.type == 'zumbido'){
+              this.doZumbido();
+            }
+
+          } else {
+            
+          }
+        } )
+    },
+    (error) => {
+        console.log(error);
+    } )
+  }
+
+  getUserNickById(id){
+    if (id === this.friend.uid) {
+      return this.friend.nick;
+    } else {
+      return this.user.nick;
+    }
   }
 
   ngOnInit() {
