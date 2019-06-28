@@ -5,6 +5,7 @@ import { database } from 'firebase';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { Command } from 'selenium-webdriver';
+import { LoadingService } from '../services/loading.service';
 
 @Component({
   selector: 'app-login',
@@ -18,15 +19,20 @@ export class LoginComponent implements OnInit {
   email:string = null;
   password:string = null;
   nick:string = null;
-
-  constructor(private cookieService: CookieService,private autenticationService:AuthenticationService,private userService:UserService,private router:Router) { 
+  load = true;
+  constructor(private cookieService: CookieService,
+              private autenticationService:AuthenticationService,
+              private userService:UserService,
+              private router:Router,
+              private loadingService:LoadingService
+              ) { 
     
-    // this.cookieService.set( 'Test', 'Hello World' );
-    // this.cookieValue = this.cookieService.get('Test');
-    // console.log(this.cookieValue);
-    // const cookieExists: boolean = cookieService.check('Test');
-    // console.log(cookieExists);
-
+    this.cookieService.set( 'Test', 'Hello World' );
+    this.cookieValue = this.cookieService.get('Test');
+    console.log(this.cookieValue);
+    const cookieExists: boolean = cookieService.check('Test');
+    console.log(cookieExists);
+   
   }
 
   ngOnInit() {
@@ -34,12 +40,14 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-
+    this.loadingService.showLoad();
     this.autenticationService.loginWithEmail(this.email,this.password).then(
       res => { // Success
         alert('loggueado correctamente');        
         console.log(res);
         this.router.navigate(['/home']);
+        this.loadingService.hideLoad();
+       
       },
       msg => { // Error
         alert('Error');

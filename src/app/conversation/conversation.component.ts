@@ -30,7 +30,7 @@ export class ConversationComponent implements OnInit {
               private authenticationService: AuthenticationService) { 
 
     this.friendId = this.activateRoute.snapshot.params['uid'];
-
+    console.log(this.friendId)
 
     this.authenticationService.getStatus().subscribe((next) => {
       this.userService.getUserById(next.uid).valueChanges().subscribe((user:User) =>{

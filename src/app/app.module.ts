@@ -25,6 +25,9 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import { RequestComponent } from './modals/request/request.component';
 import { ContactComponent } from './contact/contact.component';
+import { NgxLoadingModule } from 'ngx-loading';
+import { LoadingComponent } from './loading/loading.component';
+import { LoadingService } from './services/loading.service';
 const appRoutes:Routes = [
   {path:'', component:LoginComponent},
   {path:'home', component: HomeComponent,canActivate:[AuthenticationGuard]},
@@ -44,7 +47,8 @@ const appRoutes:Routes = [
     MenuComponent,
     SearchPipe,
     RequestComponent,
-    ContactComponent
+    ContactComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
@@ -58,9 +62,10 @@ const appRoutes:Routes = [
     AngularFireDatabaseModule,
     ImageCropperModule,
     NgbModule,
-    BootstrapModalModule.forRoot({container:document.body})
+    BootstrapModalModule.forRoot({container:document.body}),
+    NgxLoadingModule.forRoot({})
   ],
-  providers: [ CookieService ],
+  providers: [CookieService],
   bootstrap: [AppComponent],
   entryComponents:[RequestComponent]
 })

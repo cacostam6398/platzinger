@@ -17,6 +17,7 @@ export class AppComponent {
   user:User;
   requests:any[] = [];
   mailsShown : any[]=[];
+  
 
   constructor(public router: Router, private authenticationService : AuthenticationService, private userService: UserService,
               private requestService : RequestsService, private dialogService : DialogService) {
